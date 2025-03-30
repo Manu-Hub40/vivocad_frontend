@@ -33,7 +33,10 @@ export default function UploadPortal() {
 
   const uploadFile = async () => {
     const formData = new FormData();
-    formData.append("file", file);
+   if (file) {
+  formData.append("file", file);
+}
+
     formData.append("material", material);
     formData.append("color", color);
 
