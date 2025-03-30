@@ -82,7 +82,15 @@ export default function UploadPortal() {
 
       {token && (
         <div className="space-y-3 border-t pt-4">
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+         <input
+  type="file"
+  onChange={(e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  }}
+/>
+
           <input
             placeholder="Material"
             value={material}
