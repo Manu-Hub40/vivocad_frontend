@@ -32,19 +32,22 @@ export default function UploadPortal() {
   };
 
   const uploadFile = async () => {
-    const formData = new FormData();
-   if (file) {
-  formData.append("file", file);
-}
+    if (!file) {
+      setMessage("Bitte wähle eine Datei aus.");
+      return;
+    }
 
-    formData.append("material", material);
-    formData.append("color", color);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("material", material || "Unbekannt");
+    formData.append("color", color || "Unbekannt");
 
     const res = await fetch("https://vivocad-upload.onrender.com/upload", {
       method: "POST",
       headers: { "x-access-token": token },
       body: formData,
     });
+
     const data = await res.json();
     setMessage(data.message);
   };
@@ -52,6 +55,7 @@ export default function UploadPortal() {
   return (
     <main className="max-w-xl mx-auto p-6 space-y-6">
       <h1 className="text-2xl font-bold text-center">VIVOCAD Upload Portal</h1>
+
       <div className="space-y-3">
         <input
           placeholder="E-Mail"
@@ -67,8 +71,12 @@ export default function UploadPortal() {
           className="w-full border rounded p-2"
         />
         <div className="flex gap-2">
-          <button onClick={register} className="bg-gray-300 px-4 py-2 rounded">Registrieren</button>
-          <button onClick={login} className="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
+          <button onClick={register} className="bg-gray-300 px-4 py-2 rounded">
+            Registrieren
+          </button>
+          <button onClick={login} className="bg-blue-500 text-white px-4 py-2 rounded">
+            Login
+          </button>
         </div>
       </div>
 
